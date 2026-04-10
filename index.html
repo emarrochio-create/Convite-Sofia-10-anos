@@ -85,6 +85,9 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-action:hover {
@@ -175,10 +178,11 @@
                 Ver Localização
             </a>
             
-            <button onclick="copyRSVP()" id="rsvpBtn"
+            <!-- Botão Atualizado para Google Forms -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOAxe2LnJUrr4fp2Kip_MQtkBUjXiRMe_MbXRDTtPLGDpxuQ/viewform?usp=header" id="rsvpBtn" target="_blank"
                class="block w-full py-4 rounded-full bg-[#ff00ff] text-white btn-action shadow-[0_0_15px_#ff00ff]">
                 Confirmar Presença
-            </button>
+            </a>
         </div>
 
         <!-- ✨ Gemini Powered Features ✨ -->
@@ -247,8 +251,7 @@
             const modalTitle = document.getElementById('modalTitle');
             const modalBody = document.getElementById('modalBody');
             const btn = type === 'look' ? document.getElementById('lookBtn') : document.getElementById('msgBtn');
-            const originalHtml = btn.innerHTML;
-
+            
             modal.style.display = 'flex';
             modalTitle.innerText = "Consultando a IA...";
             modalBody.innerHTML = '<div class="flex justify-center p-4"><div class="loader"></div> Pensando...</div>';
@@ -276,29 +279,6 @@
 
         function closeModal() {
             document.getElementById('aiModal').style.display = 'none';
-        }
-
-        function copyRSVP() {
-            const text = "Olá! Gostaria de confirmar minha presença na festa da Sofia no dia 16/05.";
-            const btn = document.getElementById('rsvpBtn');
-            
-            const dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = text;
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-
-            const originalText = btn.innerText;
-            btn.innerText = "COPIADO PARA O WHATSAPP!";
-            btn.style.backgroundColor = "#39ff14";
-            btn.style.boxShadow = "0 0 15px #39ff14";
-            
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.style.backgroundColor = "#ff00ff";
-                btn.style.boxShadow = "0 0 15px #ff00ff";
-            }, 3000);
         }
     </script>
 </body>
