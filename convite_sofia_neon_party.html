@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sofia faz 10 - Neon Party</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --neon-green: #39ff14;
+            --dark-bg: #0d0d0d;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .neon-title {
+            font-family: 'Orbitron', sans-serif;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px var(--neon-pink),
+                0 0 30px var(--neon-pink),
+                0 0 40px var(--neon-pink);
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        .neon-border {
+            border: 4px solid #fff;
+            box-shadow:
+                0 0 10px #fff,
+                inset 0 0 10px #fff,
+                0 0 20px var(--neon-blue),
+                inset 0 0 20px var(--neon-blue);
+        }
+
+        .glow-green {
+            color: var(--neon-green);
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .glow-blue {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 20px var(--neon-pink),
+                    0 0 40px var(--neon-pink);
+            }
+            20%, 22%, 24%, 55% {
+                text-shadow: none;
+                opacity: 0.8;
+            }
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -30px); }
+        }
+
+        .btn-action {
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .btn-action:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        /* Loading Animation */
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid var(--neon-blue);
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 50;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 py-12">
+
+    <!-- Background Elements -->
+    <div class="floating-circle w-64 h-64 bg-pink-500 top-10 -left-20"></div>
+    <div class="floating-circle w-80 h-80 bg-blue-600 bottom-10 -right-20" style="animation-delay: 2s;"></div>
+    <div class="floating-circle w-40 h-40 bg-green-500 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style="animation-delay: 4s;"></div>
+
+    <!-- Invitation Card -->
+    <div class="max-w-md w-full bg-black/80 backdrop-blur-md p-8 rounded-3xl neon-border text-center relative overflow-hidden">
+        
+        <p class="uppercase tracking-[0.3em] text-sm mb-2 glow-blue">Let's Party!</p>
+        
+        <h2 class="text-4xl font-black mb-1">SOFIA</h2>
+        <h1 class="neon-title text-6xl font-black mb-4">FAZ 10</h1>
+        
+        <div class="h-1 w-24 bg-white mx-auto mb-6 shadow-[0_0_10px_#fff]"></div>
+
+        <p class="text-lg mb-8 leading-relaxed">
+            Prepare seu melhor look <span class="glow-green font-bold">NEON</span> e venha brilhar em uma noite inesquecível!
+        </p>
+
+        <!-- Details Grid -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="p-3 border border-white/20 rounded-xl">
+                <p class="text-xs uppercase text-gray-400">Data</p>
+                <p class="text-xl font-bold glow-blue">16 MAIO</p>
+                <p class="text-sm">Sábado, 2026</p>
+            </div>
+            <div class="p-3 border border-white/20 rounded-xl">
+                <p class="text-xs uppercase text-gray-400">Hora</p>
+                <p class="text-xl font-bold glow-green">19:00H</p>
+                <p class="text-sm">Início da festa</p>
+            </div>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-8">
+            <p class="text-xs uppercase text-gray-400 mb-1">Local</p>
+            <p class="font-bold text-lg">Reserva Marajoara</p>
+            <p class="text-sm text-gray-300">Av. Dr. Adilson Rodrigues, 3456</p>
+            <p class="text-xs text-gray-400">Jundiaí - SP</p>
+        </div>
+
+        <!-- Standard Actions -->
+        <div class="space-y-4 mb-8">
+            <a href="https://www.google.com/maps/search/?api=1&query=Av+Dr+Adilson+Rodrigues+3456+Jundiai" target="_blank" 
+               class="block w-full py-4 rounded-full border-2 border-[#00ffff] text-[#00ffff] btn-action hover:bg-[#00ffff] hover:text-black">
+                Ver Localização
+            </a>
+            
+            <button onclick="copyRSVP()" id="rsvpBtn"
+               class="block w-full py-4 rounded-full bg-[#ff00ff] text-white btn-action shadow-[0_0_15px_#ff00ff]">
+                Confirmar Presença
+            </button>
+        </div>
+
+        <!-- ✨ Gemini Powered Features ✨ -->
+        <div class="pt-6 border-t border-white/10 space-y-3">
+            <p class="text-[10px] uppercase tracking-widest text-gray-500 mb-2">Assistente da Festa</p>
+            
+            <button onclick="askGemini('look')" id="lookBtn"
+                class="w-full py-3 rounded-xl bg-white/5 border border-white/10 text-xs flex items-center justify-center gap-2 hover:bg-white/10 transition-colors">
+                ✨ Ideias de Look Neon
+            </button>
+
+            <button onclick="askGemini('msg')" id="msgBtn"
+                class="w-full py-3 rounded-xl bg-white/5 border border-white/10 text-xs flex items-center justify-center gap-2 hover:bg-white/10 transition-colors">
+                ✨ Criar Mensagem para a Sofia
+            </button>
+        </div>
+
+        <p class="mt-8 text-[10px] text-gray-500 uppercase tracking-widest">
+            Dica: Roupas brancas ou fluorescentes brilham na luz negra!
+        </p>
+    </div>
+
+    <!-- AI Result Modal -->
+    <div id="aiModal" class="modal">
+        <div class="bg-[#1a1a1a] p-8 rounded-3xl border-2 border-white/20 max-w-sm w-full relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white">✕</button>
+            <h3 id="modalTitle" class="text-xl font-bold mb-4 glow-blue">Processando...</h3>
+            <div id="modalBody" class="text-sm leading-relaxed text-gray-300 max-h-60 overflow-y-auto pr-2">
+                <!-- AI Content here -->
+            </div>
+            <button onclick="closeModal()" class="mt-6 w-full py-3 bg-white/10 rounded-xl hover:bg-white/20 transition-colors text-xs uppercase font-bold">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        const apiKey = ""; // API key is provided by the environment
+
+        async function callGemini(prompt) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: "Você é um assistente de festas neon. Responda de forma curta, animada e use emojis. O foco é uma festa de 10 anos para uma menina chamada Sofia." }] }
+            };
+
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error('Falha na API');
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text;
+                } catch (e) {
+                    const delay = Math.pow(2, i) * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+            throw new Error('Não foi possível conectar ao assistente no momento.');
+        }
+
+        async function askGemini(type) {
+            const modal = document.getElementById('aiModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            const btn = type === 'look' ? document.getElementById('lookBtn') : document.getElementById('msgBtn');
+            const originalHtml = btn.innerHTML;
+
+            modal.style.display = 'flex';
+            modalTitle.innerText = "Consultando a IA...";
+            modalBody.innerHTML = '<div class="flex justify-center p-4"><div class="loader"></div> Pensando...</div>';
+            
+            btn.disabled = true;
+
+            let prompt = "";
+            if (type === 'look') {
+                modalTitle.innerText = "✨ Dicas de Look Neon";
+                prompt = "Sugira 3 ideias criativas de looks neon para convidados de uma festa de 10 anos. Inclua acessórios e maquiagem que brilham na luz negra.";
+            } else {
+                modalTitle.innerText = "✨ Mensagem para a Sofia";
+                prompt = "Escreva uma mensagem de aniversário de 1-2 frases muito carinhosa e animada para a Sofia, que está fazendo 10 anos em uma festa Neon.";
+            }
+
+            try {
+                const result = await callGemini(prompt);
+                modalBody.innerText = result;
+            } catch (error) {
+                modalBody.innerHTML = `<span class="text-red-400">${error.message}</span>`;
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('aiModal').style.display = 'none';
+        }
+
+        function copyRSVP() {
+            const text = "Olá! Gostaria de confirmar minha presença na festa da Sofia no dia 16/05.";
+            const btn = document.getElementById('rsvpBtn');
+            
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            const originalText = btn.innerText;
+            btn.innerText = "COPIADO PARA O WHATSAPP!";
+            btn.style.backgroundColor = "#39ff14";
+            btn.style.boxShadow = "0 0 15px #39ff14";
+            
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.backgroundColor = "#ff00ff";
+                btn.style.boxShadow = "0 0 15px #ff00ff";
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
