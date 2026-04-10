@@ -137,12 +137,12 @@
 
     <!-- Invitation Card -->
     <div class="max-w-md w-full bg-black/80 backdrop-blur-md p-8 rounded-3xl neon-border text-center relative overflow-hidden">
-        
+
         <p class="uppercase tracking-[0.3em] text-sm mb-2 glow-blue">Let's Party!</p>
-        
+
         <h2 class="text-4xl font-black mb-1">SOFIA</h2>
         <h1 class="neon-title text-6xl font-black mb-4">FAZ 10</h1>
-        
+
         <div class="h-1 w-24 bg-white mx-auto mb-6 shadow-[0_0_10px_#fff]"></div>
 
         <p class="text-lg mb-8 leading-relaxed">
@@ -166,18 +166,18 @@
         <!-- Location -->
         <div class="mb-8">
             <p class="text-xs uppercase text-gray-400 mb-1">Local</p>
-            <p class="font-bold text-lg">Reserva Marajoara</p>
+            <p class="font-bold text-lg">Salão de festas - Reserva Marajoara</p>
             <p class="text-sm text-gray-300">Av. Dr. Adilson Rodrigues, 3456</p>
             <p class="text-xs text-gray-400">Jundiaí - SP</p>
         </div>
 
         <!-- Standard Actions -->
         <div class="space-y-4 mb-8">
-            <a href="https://www.google.com/maps/search/?api=1&query=Av+Dr+Adilson+Rodrigues+3456+Jundiai" target="_blank" 
+            <a href="https://www.google.com/maps/search/?api=1&query=Av+Dr+Adilson+Rodrigues+3456+Jundiai" target="_blank"
                class="block w-full py-4 rounded-full border-2 border-[#00ffff] text-[#00ffff] btn-action hover:bg-[#00ffff] hover:text-black">
                 Ver Localização
             </a>
-            
+
             <!-- Botão Atualizado para Google Forms -->
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOAxe2LnJUrr4fp2Kip_MQtkBUjXiRMe_MbXRDTtPLGDpxuQ/viewform?usp=header" id="rsvpBtn" target="_blank"
                class="block w-full py-4 rounded-full bg-[#ff00ff] text-white btn-action shadow-[0_0_15px_#ff00ff]">
@@ -185,101 +185,7 @@
             </a>
         </div>
 
-        <!-- ✨ Gemini Powered Features ✨ -->
-        <div class="pt-6 border-t border-white/10 space-y-3">
-            <p class="text-[10px] uppercase tracking-widest text-gray-500 mb-2">Assistente da Festa</p>
-            
-            <button onclick="askGemini('look')" id="lookBtn"
-                class="w-full py-3 rounded-xl bg-white/5 border border-white/10 text-xs flex items-center justify-center gap-2 hover:bg-white/10 transition-colors">
-                ✨ Ideias de Look Neon
-            </button>
-
-            <button onclick="askGemini('msg')" id="msgBtn"
-                class="w-full py-3 rounded-xl bg-white/5 border border-white/10 text-xs flex items-center justify-center gap-2 hover:bg-white/10 transition-colors">
-                ✨ Criar Mensagem para a Sofia
-            </button>
-        </div>
-
-        <p class="mt-8 text-[10px] text-gray-500 uppercase tracking-widest">
-            Dica: Roupas brancas ou fluorescentes brilham na luz negra!
-        </p>
-    </div>
-
-    <!-- AI Result Modal -->
-    <div id="aiModal" class="modal">
-        <div class="bg-[#1a1a1a] p-8 rounded-3xl border-2 border-white/20 max-w-sm w-full relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white">✕</button>
-            <h3 id="modalTitle" class="text-xl font-bold mb-4 glow-blue">Processando...</h3>
-            <div id="modalBody" class="text-sm leading-relaxed text-gray-300 max-h-60 overflow-y-auto pr-2">
-                <!-- AI Content here -->
-            </div>
-            <button onclick="closeModal()" class="mt-6 w-full py-3 bg-white/10 rounded-xl hover:bg-white/20 transition-colors text-xs uppercase font-bold">Fechar</button>
-        </div>
-    </div>
-
-    <script>
-        const apiKey = ""; // API key is provided by the environment
-
-        async function callGemini(prompt) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: "Você é um assistente de festas neon. Responda de forma curta, animada e use emojis. O foco é uma festa de 10 anos para uma menina chamada Sofia." }] }
-            };
-
-            for (let i = 0; i < 5; i++) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) throw new Error('Falha na API');
-                    const data = await response.json();
-                    return data.candidates?.[0]?.content?.parts?.[0]?.text;
-                } catch (e) {
-                    const delay = Math.pow(2, i) * 1000;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
-            }
-            throw new Error('Não foi possível conectar ao assistente no momento.');
-        }
-
-        async function askGemini(type) {
-            const modal = document.getElementById('aiModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalBody = document.getElementById('modalBody');
-            const btn = type === 'look' ? document.getElementById('lookBtn') : document.getElementById('msgBtn');
-            
-            modal.style.display = 'flex';
-            modalTitle.innerText = "Consultando a IA...";
-            modalBody.innerHTML = '<div class="flex justify-center p-4"><div class="loader"></div> Pensando...</div>';
-            
-            btn.disabled = true;
-
-            let prompt = "";
-            if (type === 'look') {
-                modalTitle.innerText = "✨ Dicas de Look Neon";
-                prompt = "Sugira 3 ideias criativas de looks neon para convidados de uma festa de 10 anos. Inclua acessórios e maquiagem que brilham na luz negra.";
-            } else {
-                modalTitle.innerText = "✨ Mensagem para a Sofia";
-                prompt = "Escreva uma mensagem de aniversário de 1-2 frases muito carinhosa e animada para a Sofia, que está fazendo 10 anos em uma festa Neon.";
-            }
-
-            try {
-                const result = await callGemini(prompt);
-                modalBody.innerText = result;
-            } catch (error) {
-                modalBody.innerHTML = `<span class="text-red-400">${error.message}</span>`;
-            } finally {
-                btn.disabled = false;
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('aiModal').style.display = 'none';
-        }
+        
     </script>
 </body>
 </html>
