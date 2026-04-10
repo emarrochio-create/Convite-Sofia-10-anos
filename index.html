@@ -169,7 +169,7 @@
             <p class="font-bold text-lg">Salão de festas - Reserva Marajoara</p>
             <p class="text-sm text-gray-300">Av. Dr. Adilson Rodrigues, 3456</p>
             <p class="text-xs text-gray-400">Jundiaí - SP</p>
-        </div>
+        }
 
         <!-- Standard Actions -->
         <div class="space-y-4 mb-8">
@@ -183,9 +183,83 @@
                class="block w-full py-4 rounded-full bg-[#ff00ff] text-white btn-action shadow-[0_0_15px_#ff00ff]">
                 Confirmar Presença
             </a>
+
+            <button id="countdownBtn" class="block w-full py-4 rounded-full border-2 border-white text-white btn-action hover:bg-white hover:text-black">
+                Contagem Regressiva
+            </button>
         </div>
 
+    </div>
 
+    <!-- Countdown Modal -->
+    <div id="countdownModal" class="modal">
+        <div class="bg-black/90 p-8 rounded-3xl neon-border text-center relative max-w-md w-full">
+            <button class="absolute top-4 right-4 text-white text-2xl font-bold" onclick="closeModal()">&times;</button>
+            <h2 class="neon-title text-4xl mb-6">Faltam para a festa!</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-2xl md:text-3xl lg:text-4xl font-bold orbitron">
+                <div>
+                    <span id="days" class="glow-blue">00</span><br>
+                    <span class="text-sm uppercase text-gray-400">Dias</span>
+                </div>
+                <div>
+                    <span id="hours" class="glow-green">00</span><br>
+                    <span class="text-sm uppercase text-gray-400">Horas</span>
+                </div>
+                <div>
+                    <span id="minutes" class="glow-blue">00</span><br>
+                    <span class="text-sm uppercase text-gray-400">Minutos</span>
+                </div>
+                <div>
+                    <span id="seconds" class="glow-green">00</span><br>
+                    <span class="text-sm uppercase text-gray-400">Segundos</span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Countdown Logic
+        const countdownDate = new Date("May 16, 2026 17:00:00").getTime();
+
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = String(days).padStart(2, '0');
+            document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "A FESTA COMEÇOU!";
+            }
+        }, 1000);
+
+        // Modal Logic
+        const countdownBtn = document.getElementById('countdownBtn');
+        const countdownModal = document.getElementById('countdownModal');
+
+        function openModal() {
+            countdownModal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            countdownModal.style.display = 'none';
+        }
+
+        countdownBtn.addEventListener('click', openModal);
+
+        window.onclick = function(event) {
+            if (event.target == countdownModal) {
+                closeModal();
+            }
+        };
     </script>
 </body>
 </html>
